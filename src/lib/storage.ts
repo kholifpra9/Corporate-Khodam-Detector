@@ -25,6 +25,12 @@ export function saveToHistory(result: GeneratorResult): void {
   }
 }
 
+export function removeFromHistory(signature: string): void {
+  const history = loadHistory();
+  const filtered = history.filter((h) => h.signature !== signature);
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(filtered));
+}
+
 export function clearHistory(): void {
   localStorage.setItem(STORAGE_KEY, JSON.stringify([]));
 }

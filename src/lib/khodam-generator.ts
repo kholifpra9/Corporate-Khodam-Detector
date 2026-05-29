@@ -20,6 +20,8 @@ export function generateKhodam(name: string, role: JobRole): GeneratorResult {
   }
 
   return {
+    name,
+    role,
     khodam: {
       ...khodam,
       attributes: generateAttributes(seed),

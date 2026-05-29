@@ -3,6 +3,7 @@
 # dependencies
 /node_modules
 /.agents
+/.agent
 /.pnp
 .pnp.*
 .yarn/*

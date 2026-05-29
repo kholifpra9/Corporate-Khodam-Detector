@@ -42,6 +42,8 @@ export interface FormData {
 }
 
 export interface GeneratorResult {
+  name: string;
+  role: JobRole;
   khodam: KhodamEntity;
   seed: number;
   signature: string;

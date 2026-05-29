@@ -22,16 +22,31 @@
 |---|---|
 | `src/types/` | Shared TS types + constants (JobRole, Rarity, JOB_ROLES, RARITY_CONFIG) |
 | `src/data/` | Static khodam database (42 entities) |
-| `src/lib/` | Pure logic: seed hash, generator, utils |
+| `src/lib/` | Pure logic: seed hash, generator, utils, storage |
 | `src/components/ui/` | Reusable primitives (Button, Card, Input, Select, Badge) |
-| `src/components/khodam/` | Domain components (Form, Card, Result, RarityBadge, DownloadButton) |
-| `src/components/layout/` | Header, Footer, Container |
+| `src/components/khodam/` | Domain components (Form, Card, Result, RarityBadge, DownloadButton, LoadingSpinner, Particles) |
+| `src/components/layout/` | Header, Footer, Container, ThemeToggle |
+| `.agent/` | Project documentation (PRD, ARCHITECTURE, TECHNICAL_PLAN) |
+
+## Interactive Features (v2)
+- **Dark mode toggle** — `ThemeToggle.tsx` persists to localStorage, respects system preference
+- **Particle effects** — `Particles.tsx` canvas-based sparkle system, color/amount varies by rarity
+- **Loading animation** — `LoadingSpinner.tsx` rotating messages + emoji + pulsing dots
+- **Share** — Web Share API with clipboard fallback in `KhodamResult.tsx`
+- **Copy signature** — Click signature hex to copy, brief "Copied!" feedback
+- **History search** — Filter history by name/signature/rarity
+- **Individual delete** — Hover to reveal X button per history item
+- **Character counter** — `{name.length}/100` on form input
+- **Card reveal animation** — CSS `animate-reveal` + rarity-based glow shadow
+- **Real-time error clearing** — Errors clear on input change
 
 ## Conventions
 - UI primitives are generic, domain components go in `khodam/`.
 - All components that use browser APIs, event handlers, or React state include `'use client'`.
 - `html-to-image.toPng()` captures the card DOM for download — requires a ref on the card wrapper.
 - Tailwind v4 `@theme inline` block in `globals.css` for CSS custom properties.
+- Avoid `useEffect` for state initialization — use lazy `useState(() => ...)` instead.
+- Canvas animations use `requestAnimationFrame` with cleanup on unmount.
 
 ## Deployment
 - Deploy to Vercel via `vercel --prod` (or git push with Vercel git integration).

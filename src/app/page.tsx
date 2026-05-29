@@ -15,17 +15,24 @@ import type { JobRole, GeneratorResult } from '@/types';
 export default function Home() {
   const [result, setResult] = useState<GeneratorResult | null>(null);
   const [loading, setLoading] = useState(false);
+  const [historyKey, setHistoryKey] = useState(0);
 
   const handleGenerate = useCallback((name: string, role: JobRole) => {
     setLoading(true);
-    const generated = generateKhodam(name, role);
-    setResult(generated);
-    saveToHistory(generated);
-    setLoading(false);
+    // Simulasi delay untuk efek mistis
+    const delay = 800 + Math.random() * 1200;
+    setTimeout(() => {
+      const generated = generateKhodam(name, role);
+      setResult(generated);
+      saveToHistory(generated);
+      setLoading(false);
+      setHistoryKey((k) => k + 1);
+    }, delay);
   }, []);
 
   const handleReset = useCallback(() => {
     setResult(null);
+    setHistoryKey((k) => k + 1);
   }, []);
 
   const handleSelectHistory = useCallback((item: GeneratorResult) => {
@@ -40,7 +47,7 @@ export default function Home() {
           <>
             <Card className="p-6 md:p-8">
               <div className="text-center mb-6">
-                <span className="text-5xl block mb-3">🔮</span>
+                <span className="text-5xl block mb-3 animate-float">🔮</span>
                 <h2 className="text-2xl font-bold text-gray-900 dark:text-white">
                   Cek Khodam Korporat-mu
                 </h2>
@@ -51,7 +58,7 @@ export default function Home() {
               </div>
               <KhodamForm onGenerate={handleGenerate} loading={loading} />
             </Card>
-            <KhodamHistory onSelect={handleSelectHistory} />
+            <KhodamHistory key={historyKey} onSelect={handleSelectHistory} />
           </>
         ) : (
           <KhodamResult result={result} onReset={handleReset} />
